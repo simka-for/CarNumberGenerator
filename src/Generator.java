@@ -1,23 +1,29 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
 public class Generator implements Runnable{
 
     private final int regionCode;
+    private static final Path targetPath = Paths.get("res/numbers.txt");
 
     Generator(int regionCode) {
         this.regionCode = regionCode;
     }
-
 
     @Override
     public void run() {
 
         char[] letters = {'У', 'К', 'Е', 'Н', 'Х', 'В', 'А', 'Р', 'О', 'С', 'М', 'Т'};
 
-        StringBuilder carNumber = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         for (char firstLetter : letters) {
             for (char secondLetter : letters) {
                 for (char thirdLetter : letters) {
                     for (int number = 1; number < 1000; number++) {
-                        carNumber.append(firstLetter)
+                        builder.append(firstLetter)
                                 .append(padNumber(number, 3))
                                 .append(secondLetter).append(thirdLetter)
                                 .append(padNumber(regionCode, 2))
@@ -26,7 +32,12 @@ public class Generator implements Runnable{
                 }
             }
         }
-        Main.queue.add(carNumber.toString());
+        try {
+            Files.write(targetPath, builder.toString().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Регион № " + regionCode + " сгенерирован");
     }
 
     private static String padNumber(int number, int numberLength) {
