@@ -6,7 +6,7 @@ public class Main {
 
     private static final int processorCoreCount = ((Runtime.getRuntime().availableProcessors()));
 
-    private static final int regionCount = 100;
+    private static final int regionCount = 20;
 
 
     public static void main(String[] args) throws InterruptedException {

@@ -7,7 +7,6 @@ import java.nio.file.StandardOpenOption;
 public class Generator implements Runnable{
 
     private final int regionCode;
-    private static final Path targetPath = Paths.get("res/numbers.txt");
 
     Generator(int regionCode) {
         this.regionCode = regionCode;
@@ -15,6 +14,8 @@ public class Generator implements Runnable{
 
     @Override
     public void run() {
+
+        Path targetPath = Paths.get("res/numbersRegion" + regionCode + ".txt");
 
         char[] letters = {'У', 'К', 'Е', 'Н', 'Х', 'В', 'А', 'Р', 'О', 'С', 'М', 'Т'};
 
